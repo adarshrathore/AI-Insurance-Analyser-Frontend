@@ -1,0 +1,51 @@
+.review-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  
+  .review-container h2 {
+    text-align: center;
+  }
+  
+  .review-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .review-container input,
+  .review-container textarea,
+  .review-container select {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .review-container button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .review-container button:hover {
+    background-color: #218838;
+  }
+  
+  .review-list {
+    margin-top: 30px;
+  }
+  
+  .review-item {
+    border-top: 1px solid #eee;
+    padding: 10px 0;
+  }
+  

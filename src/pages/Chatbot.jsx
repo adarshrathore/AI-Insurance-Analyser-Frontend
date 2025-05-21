@@ -1,44 +1,69 @@
 import React, { useState } from "react";
-import "./Chatbot.css";
+import axios from "axios";
 
 function Chatbot() {
-  const [prompt, setPrompt] = useState("");
-  const [response, setResponse] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [chatHistory, setChatHistory] = useState([]);
 
-  const handleAsk = async () => {
-    if (!prompt) return alert("Please enter a question");
-    setLoading(true);
+  const handleSend = async () => {
+    if (!message.trim()) return;
+
+    const userMessage = { role: "user", text: message };
+    setChatHistory((prev) => [...prev, userMessage]);
+    setMessage(""); // Clear input
+
     try {
-      const res = await fetch("http://localhost:3000/chatbot", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt }),
+      const res = await axios.post("http://localhost:3000/api/chat", {
+        message,
       });
 
-      const data = await res.json();
-      setResponse(data.result || "No response from AI");
+      const botReply = { role: "bot", text: res.data.reply };
+      setChatHistory((prev) => [...prev, botReply]);
     } catch (err) {
-      setResponse("Server error. Please try again.");
-    } finally {
-      setLoading(false);
+      const errorReply = { role: "bot", text: "Sorry, something went wrong." };
+      setChatHistory((prev) => [...prev, errorReply]);
     }
   };
 
   return (
-    <div className="chatbot-container">
-      <h2>Insurance Expert AI Chatbot</h2>
-      <textarea
-        placeholder="Ask me anything about insurance..."
-        value={prompt}
-        onChange={(e) => setPrompt(e.target.value)}
-      />
-      <button onClick={handleAsk} disabled={loading}>
-        {loading ? "Asking..." : "Ask"}
-      </button>
-      <div className="chatbot-response">
-        <h4>Response:</h4>
-        <p>{response}</p>
+    <div className="p-6 max-w-2xl mx-auto">
+      <h2 className="text-2xl font-bold mb-4 text-center">Insurance Chatbot</h2>
+
+      <div className="bg-gray-100 rounded p-4 h-[60vh] overflow-y-auto mb-4 shadow">
+        {chatHistory.map((msg, index) => (
+          <div
+            key={index}
+            className={`mb-2 flex ${
+              msg.role === "user" ? "justify-end" : "justify-start"
+            }`}
+          >
+            <div
+              className={`px-4 py-2 rounded-xl max-w-xs ${
+                msg.role === "user"
+                  ? "bg-blue-500 text-white"
+                  : "bg-white border text-gray-800"
+              }`}
+            >
+              {msg.text}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex gap-2">
+        <input
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder="Type your question..."
+          className="flex-grow border p-2 rounded shadow"
+          onKeyDown={(e) => e.key === "Enter" && handleSend()}
+        />
+        <button
+          onClick={handleSend}
+          className="bg-blue-600 text-white px-4 py-2 rounded shadow"
+        >
+          Send
+        </button>
       </div>
     </div>
   );

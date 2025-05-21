@@ -2,22 +2,21 @@ import React, { useState } from "react";
 import axios from "axios";
 
 function Summarizer() {
-  const [file, setFile] = useState(null);
+  const [policyText, setPolicyText] = useState("");
   const [language, setLanguage] = useState("en");
   const [summary, setSummary] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleUpload = async (e) => {
+  const handleSummarize = async (e) => {
     e.preventDefault();
-    if (!file) return alert("Please upload a PDF");
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("language", language);
+    if (!policyText.trim()) return alert("Please enter policy text");
 
     try {
       setLoading(true);
-      const res = await axios.post("http://localhost:3000/api/summarize", formData);
+      const res = await axios.post("http://localhost:3000/api/summarize", {
+        policyText,
+        language,
+      });
       setSummary(res.data.summary);
     } catch (err) {
       console.error(err);
@@ -30,14 +29,19 @@ function Summarizer() {
   return (
     <div className="container">
       <h2>📄 AI Policy Summarizer</h2>
-      <form onSubmit={handleUpload}>
-        <input type="file" accept="application/pdf" onChange={(e) => setFile(e.target.files[0])} />
+      <form onSubmit={handleSummarize}>
+        <textarea
+          rows={10}
+          placeholder="Paste your policy text here..."
+          value={policyText}
+          onChange={(e) => setPolicyText(e.target.value)}
+        />
         <select value={language} onChange={(e) => setLanguage(e.target.value)}>
           <option value="en">English</option>
           <option value="hi">Hindi</option>
         </select>
         <button type="submit" disabled={loading}>
-          {loading ? "Summarizing..." : "Summarize PDF"}
+          {loading ? "Summarizing..." : "Summarize Text"}
         </button>
       </form>
 

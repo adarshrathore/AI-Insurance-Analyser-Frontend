@@ -9,13 +9,13 @@ function Comparator() {
 
   const handleCompare = async () => {
     if (!policy1 || !policy2) {
-      alert("Please enter both policies");
+      alert("Please enter both policy names");
       return;
     }
 
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:3000/compare", {
+      const response = await fetch("http://localhost:3000/api/compare/compare", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ policy1, policy2 }),
@@ -37,24 +37,37 @@ function Comparator() {
   return (
     <div className="comparator-container">
       <h2>Compare Two Insurance Policies</h2>
-      <textarea
-        placeholder="Enter Policy 1"
-        value={policy1}
-        onChange={(e) => setPolicy1(e.target.value)}
-      />
-      <textarea
-        placeholder="Enter Policy 2"
-        value={policy2}
-        onChange={(e) => setPolicy2(e.target.value)}
-      />
+
+      <div className="input-group">
+        <label>Policy 1 Name:</label>
+        <input
+          type="text"
+          placeholder="Enter name of Policy 1"
+          value={policy1}
+          onChange={(e) => setPolicy1(e.target.value)}
+        />
+      </div>
+
+      <div className="input-group">
+        <label>Policy 2 Name:</label>
+        <input
+          type="text"
+          placeholder="Enter name of Policy 2"
+          value={policy2}
+          onChange={(e) => setPolicy2(e.target.value)}
+        />
+      </div>
+
       <button onClick={handleCompare} disabled={loading}>
         {loading ? "Comparing..." : "Compare"}
       </button>
 
-      <div className="comparison-result">
-        <h3>Comparison Table</h3>
-        <div dangerouslySetInnerHTML={{ __html: result }} />
-      </div>
+      {result && (
+        <div className="comparison-result">
+          <h3>Comparison Table</h3>
+          <div dangerouslySetInnerHTML={{ __html: result }} />
+        </div>
+      )}
     </div>
   );
 }

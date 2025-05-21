@@ -10,30 +10,32 @@ import Summarizer from "./pages/Summarizer";
 import Page1 from "./pages/Page1";
 import ReviewPage from "./pages/Review";
 import PrivateRoute from "./components/PrivateRoute";
+import AuthProvider from "./context/AuthContext";
 
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/chatbot" element={<Chatbot />} />
-        <Route path="/comparator" element={<Comparator />} />
-        <Route path="/summarizer" element={<Summarizer />} />
-        <Route path="/page1" element={<Page1 />} />
-        
-        <Route
-          path="/review"
-          element={
-            <PrivateRoute>
-              <ReviewPage />
-            </PrivateRoute>
-          }
-        />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/chatbot" element={<Chatbot />} />
+          <Route path="/comparator" element={<Comparator />} />
+          <Route path="/summarizer" element={<Summarizer />} />
+          <Route path="/page1" element={<Page1 />} />
+          <Route
+            path="/review"
+            element={
+              <PrivateRoute>
+                <ReviewPage />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

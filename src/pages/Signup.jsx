@@ -38,14 +38,19 @@ function Signup() {
   };
 
   return (
-    <div className="signup-container">
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSignup}>
+    <div className="login-container min-h-screen bg-blue-100 flex items-center justify-center px-4">
+      
+      <form onSubmit={handleSignup} className="w-half max-w-2xl bg-white p-12 rounded-2xl shadow-2xl font-sans">
+        <h2 className="text-3xl font-bold font-serif text-gray-800 mb-8 text-center">
+        Sign Up
+         </h2>
+         
         <input
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Username"
+          className="w-full mb-6 px-5 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-base"
           required
         />
         <input
@@ -53,6 +58,7 @@ function Signup() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
+          className="w-full mb-6 px-5 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-base"
           required
         />
         <input
@@ -60,11 +66,18 @@ function Signup() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
+          className="w-full mb-8 px-5 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-base"
           required
         />
-        <button type="submit">Sign Up</button>
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white py-4 rounded-lg text-lg font-medium hover:bg-blue-700 transition duration-200"
+        >
+          Sign Up
+        </button>
       </form>
     </div>
+
   );
 }
 

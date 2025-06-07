@@ -11,6 +11,8 @@ import Page1 from "./pages/Page1";
 import ReviewPage from "./pages/Review";
 import PrivateRoute from "./components/PrivateRoute";
 import AuthProvider from "./context/AuthContext";
+import Footer from "./components/Footer";
+import About from "./pages/About";
 
 function App() {
   return (
@@ -25,6 +27,7 @@ function App() {
           <Route path="/comparator" element={<Comparator />} />
           <Route path="/summarizer" element={<Summarizer />} />
           <Route path="/page1" element={<Page1 />} />
+          <Route path="/about" element={<About />} />
           <Route
             path="/review"
             element={
@@ -34,6 +37,7 @@ function App() {
             }
           />
         </Routes>
+        <Footer />
       </Router>
     </AuthProvider>
   );

@@ -10,7 +10,7 @@ function Chatbot() {
 
     const userMessage = { role: "user", text: message };
     setChatHistory((prev) => [...prev, userMessage]);
-    setMessage(""); // Clear input
+    setMessage("");
 
     try {
       const res = await axios.post("http://localhost:3000/api/chat", {
@@ -26,44 +26,53 @@ function Chatbot() {
   };
 
   return (
-    <div className="p-6 max-w-2xl mx-auto">
-      <h2 className="text-2xl font-bold mb-4 text-center">Insurance Chatbot</h2>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200 p-6 flex justify-center items-start">
+      <div className="w-full max-w-3xl">
+        <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
+          💬 Insurance Chatbot
+        </h2>
 
-      <div className="bg-gray-100 rounded p-4 h-[60vh] overflow-y-auto mb-4 shadow">
-        {chatHistory.map((msg, index) => (
-          <div
-            key={index}
-            className={`mb-2 flex ${
-              msg.role === "user" ? "justify-end" : "justify-start"
-            }`}
-          >
+        <div
+          className={`transition-all duration-300 rounded-xl p-4 h-[60vh] overflow-y-auto shadow-md border bg-white ${
+            chatHistory.length > 0 ? "border-blue-400 ring-1 ring-blue-200" : "border-gray-200"
+          }`}
+        >
+          {chatHistory.map((msg, index) => (
             <div
-              className={`px-4 py-2 rounded-xl max-w-xs ${
-                msg.role === "user"
-                  ? "bg-blue-500 text-white"
-                  : "bg-white border text-gray-800"
+              key={index}
+              className={`mb-3 flex ${
+                msg.role === "user" ? "justify-end" : "justify-start"
               }`}
             >
-              {msg.text}
+              <div
+                className={`px-4 py-2 rounded-xl max-w-sm whitespace-pre-line text-sm shadow-md ${
+                  msg.role === "user"
+                    ? "bg-blue-500 text-white"
+                    : "bg-blue-100 text-gray-800 border border-blue-200"
+                }`}
+              >
+                {msg.text}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      <div className="flex gap-2">
-        <input
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Type your question..."
-          className="flex-grow border p-2 rounded shadow"
-          onKeyDown={(e) => e.key === "Enter" && handleSend()}
-        />
-        <button
-          onClick={handleSend}
-          className="bg-blue-600 text-white px-4 py-2 rounded shadow"
-        >
-          Send
-        </button>
+        <div className="mt-4 flex gap-3">
+          <input
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSend()}
+            placeholder="Type your question..."
+            className="flex-grow px-4 py-2 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          <button
+            onClick={handleSend}
+            className="px-5 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 shadow-md transition-colors duration-300"
+          >
+            Send
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./Review.css";
 
 function Review() {
   const [reviews, setReviews] = useState([]);
@@ -63,50 +62,75 @@ function Review() {
   };
 
   return (
-    <div className="review-container">
-      <h2>📝 Policy Reviews</h2>
+    <div className="max-w-4xl mx-auto px-6 py-10 bg-gray-50 rounded-lg shadow-lg">
+      <h2 className="text-3xl font-serif font-bold text-gray-800 mb-6">📝 Policy Reviews</h2>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Policy Name"
-          value={policyName}
-          onChange={(e) => setPolicyName(e.target.value)}
-          required
-        />
-        <textarea
-          placeholder="Your comment..."
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          required
-        />
-        <select
-          value={rating}
-          onChange={(e) => setRating(e.target.value)}
-          required
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white rounded-lg shadow-md p-6 mb-10 border border-gray-200"
+      >
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Policy Name"
+            value={policyName}
+            onChange={(e) => setPolicyName(e.target.value)}
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
+        </div>
+
+        <div className="mb-4">
+          <textarea
+            placeholder="Your comment..."
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            required
+            rows={4}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
+        </div>
+
+        <div className="mb-4">
+          <select
+            value={rating}
+            onChange={(e) => setRating(e.target.value)}
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+          >
+            <option value="">Rate out of 5</option>
+            {[1, 2, 3, 4, 5].map((num) => (
+              <option key={num} value={num}>
+                {num}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors duration-300"
         >
-          <option value="">Rate out of 5</option>
-          {[1, 2, 3, 4, 5].map((num) => (
-            <option key={num} value={num}>
-              {num}
-            </option>
-          ))}
-        </select>
-        <button type="submit">Submit Review</button>
+          Submit Review
+        </button>
       </form>
 
-      <div className="review-list">
+      <div className="space-y-6">
         {loading ? (
-          <p>Loading reviews...</p>
+          <p className="text-gray-600 font-medium">Loading reviews...</p>
         ) : reviews.length === 0 ? (
-          <p>No reviews yet.</p>
+          <p className="text-gray-600 font-medium">No reviews yet.</p>
         ) : (
           reviews.map((rev, idx) => (
-            <div key={idx} className="review-item">
-              <h4>{rev.policyName}</h4>
-              <p>{rev.comment}</p>
-              <p>
-                ⭐ {rev.rating} by <strong>{rev.username}</strong>
+            <div
+              key={idx}
+              className="bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300 border border-blue-300 rounded-xl p-5 shadow-md"
+            >
+              <h4 className="text-lg font-bold text-gray-800 mb-2">{rev.policyName}</h4>
+              <p className="text-gray-700 mb-2">{rev.comment}</p>
+              <p className="text-sm text-gray-600">
+                ⭐ {rev.rating} by{" "}
+                <span className="font-semibold text-gray-900">{rev.username}</span>
               </p>
             </div>
           ))

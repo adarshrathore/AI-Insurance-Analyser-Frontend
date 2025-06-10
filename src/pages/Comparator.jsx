@@ -14,7 +14,7 @@ function Comparator() {
 
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:3000/api/compare/compare", {
+      const response = await fetch("https://rateguard-analytics-backend.onrender.com/api/compare/compare", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ policy1, policy2 }),

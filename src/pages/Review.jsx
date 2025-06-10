@@ -11,7 +11,7 @@ function Review() {
     const token = localStorage.getItem("token");
     if (!token) return;
 
-    fetch("http://localhost:3000/api/reviews", {
+    fetch("https://rateguard-analytics-backend.onrender.com/api/reviews", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -37,7 +37,7 @@ function Review() {
     }
 
     try {
-      const res = await fetch("http://localhost:3000/api/reviews", {
+      const res = await fetch("https://rateguard-analytics-backend.onrender.com/api/reviews", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

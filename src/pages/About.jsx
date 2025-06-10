@@ -62,7 +62,7 @@ const About = () => {
       <section className="py-16 bg-blue-50">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <h2 className="text-3xl font-bold text-blue-800 mb-10">Meet the Team</h2>
-          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
             {/* Team Member 1 */}
             <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-blue-300 transition">
               <img
@@ -93,15 +93,7 @@ const About = () => {
               <h4 className="text-lg font-semibold text-blue-700">Amol Thakur</h4>
               <p className="text-sm text-gray-500">Product Manager</p>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-blue-300 transition">
-              <img
-                src="/images/hrinal.jpg"
-                alt="Hrinal Meshram"
-                className="w-24 h-24 mx-auto rounded-full object-cover mb-4"
-              />
-              <h4 className="text-lg font-semibold text-blue-700">Hrinal Meshram</h4>
-              <p className="text-sm text-gray-500">Employee</p>
-            </div>
+            
           </div>
         </div>
       </section>

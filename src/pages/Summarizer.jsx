@@ -13,7 +13,7 @@ function Summarizer() {
 
     try {
       setLoading(true);
-      const res = await axios.post("http://localhost:3000/api/summarize", {
+      const res = await axios.post("https://rateguard-analytics-backend.onrender.com/api/summarize", {
         policyText,
         language,
       });

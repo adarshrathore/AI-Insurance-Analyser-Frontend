@@ -13,7 +13,7 @@ function Chatbot() {
     setMessage("");
 
     try {
-      const res = await axios.post("http://localhost:3000/api/chat", {
+      const res = await axios.post("https://rateguard-analytics-backend.onrender.com/api/chat", {
         message,
       });
 

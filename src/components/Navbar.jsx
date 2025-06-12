@@ -1,77 +1,92 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import "./Navbar.css";
-
-// const Navbar = () => {
-//   const { authToken, logout } = useContext(AuthContext);
-//   const navigate = useNavigate();
-
-//   const handleLogout = () => {
-//     logout();
-//     navigate("/login");
-//   };
-
-//   return (
-//     <nav>
-//       <Link to="/">Home</Link>
-//       <Link to="/summarizer">Summarizer</Link>
-//       <Link to="/comparator">Comparator</Link>
-//       <Link to="/chatbot">Chatbot</Link>
-//       <Link to="/page1">Page1</Link>
-//       <Link to="/review">Review</Link>
-//       {!authToken ? (
-//         <>
-//           <Link to="/login">Login</Link>
-//           <Link to="/signup">Signup</Link>
-//         </>
-//       ) : (
-//         <button onClick={handleLogout}>Logout</button>
-//       )}
-//     </nav>
-//   );
-// };
-
-// export default Navbar;
-// import insurance from "/images/insurance-bg.jpg";  // ✅ correct variable name
+import { Menu, X } from "lucide-react"; // Tailwind + Lucide for icons
 
 const Navbar = () => {
   const { authToken, logout } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
     navigate("/login");
   };
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
-    <div>
-      <nav className="navbar">
-        <div className="navbar-left">
-          {/* <h1 to="/" className="logo">Rateguard</h1> */}
-          <NavLink to="/" end className={({ isActive }) => (isActive ? "active head" : "head")}>RATEGUARD ANALYTICS</NavLink>
+    <nav className="bg-white shadow-md fixed w-full top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+        {/* Logo / Title */}
+        <NavLink to="/" end className="text-xl font-bold text-blue-600">
+          RATEGUARD ANALYTICS
+        </NavLink>
+
+        {/* Desktop Links */}
+        <div className="hidden md:flex space-x-6 items-center">
+          <NavLink to="/" end className={({ isActive }) => isActive ? "text-blue-600 font-semibold" : "text-gray-700 hover:text-blue-600"}>
+            Home
+          </NavLink>
+          <NavLink to="/about" className={({ isActive }) => isActive ? "text-blue-600 font-semibold" : "text-gray-700 hover:text-blue-600"}>
+            About
+          </NavLink>
+          <NavLink to="/" state={{ scrollTo: "services" }} className="text-gray-700 hover:text-blue-600">
+            Services
+          </NavLink>
+          {!authToken ? (
+            <>
+              <NavLink to="/login" className={({ isActive }) => isActive ? "text-blue-600 font-semibold" : "text-gray-700 hover:text-blue-600"}>
+                Login
+              </NavLink>
+              <NavLink to="/signup" className="text-gray-700 hover:text-blue-600">
+                Signup
+              </NavLink>
+            </>
+          ) : (
+            <button onClick={handleLogout} className="text-gray-700 hover:text-red-600">
+              Logout
+            </button>
+          )}
         </div>
-        <div className="navbar-right">
-          <div className="list-container">
-            <NavLink to="/" end className={({ isActive }) => (isActive ? "active" : "")}>Home</NavLink>
-            <NavLink to="/about" className={({ isActive }) => (isActive ? "active" : "")}>About</NavLink>
-            <NavLink to="/" state={{ scrollTo: "services" }} className={({ isActive }) => (isActive ? "" : "")}>
-              Services
-            </NavLink>
-            {!authToken ? (
-                    <>
-                      <NavLink to="/login" className={({ isActive }) => (isActive ? "active" : "")}>Login</NavLink>
-                      <NavLink to="/signup">Signup</NavLink>
-                    </>
-                  ) : (
-                    <NavLink onClick={handleLogout}>Logout</NavLink>
-                  )}
-          </div>
 
+        {/* Mobile Menu Button */}
+        <button className="md:hidden text-gray-700" onClick={toggleMenu}>
+          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile Dropdown */}
+      {menuOpen && (
+        <div className="md:hidden bg-white shadow-md px-4 py-3 space-y-2">
+          <NavLink to="/" end onClick={() => setMenuOpen(false)} className={({ isActive }) => isActive ? "block text-blue-600 font-semibold" : "block text-gray-700 hover:text-blue-600"}>
+            Home
+          </NavLink>
+          <NavLink to="/about" onClick={() => setMenuOpen(false)} className={({ isActive }) => isActive ? "block text-blue-600 font-semibold" : "block text-gray-700 hover:text-blue-600"}>
+            About
+          </NavLink>
+          <NavLink to="/" state={{ scrollTo: "services" }} onClick={() => setMenuOpen(false)} className="block text-gray-700 hover:text-blue-600">
+            Services
+          </NavLink>
+          {!authToken ? (
+            <>
+              <NavLink to="/login" onClick={() => setMenuOpen(false)} className={({ isActive }) => isActive ? "block text-blue-600 font-semibold" : "block text-gray-700 hover:text-blue-600"}>
+                Login
+              </NavLink>
+              <NavLink to="/signup" onClick={() => setMenuOpen(false)} className="block text-gray-700 hover:text-blue-600">
+                Signup
+              </NavLink>
+            </>
+          ) : (
+            <button onClick={() => { handleLogout(); setMenuOpen(false); }} className="block text-gray-700 hover:text-red-600">
+              Logout
+            </button>
+          )}
         </div>
-      </nav>
-
-
-    </div>
+      )}
+    </nav>
   );
 };
 

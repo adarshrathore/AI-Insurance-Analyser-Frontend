@@ -13,7 +13,7 @@ function Chatbot() {
     setMessage("");
 
     try {
-      const res = await axios.post("https://ai-insurance-analyzer-backend.vercel.app/api/chat", {
+      const res = await axios.post("https://rateguard-analytics-backend.onrender.com/api/chat", {
         message,
       });
 

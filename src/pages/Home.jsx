@@ -19,7 +19,7 @@ const Home = () => {
   };
 
   return (
-    <div className="home-wrapper">
+    <div className="home-wrapper pt-[80px]">
       <section className="hero-section">
         <div className="hero-overlay flex">
           <div className="hero-content">
